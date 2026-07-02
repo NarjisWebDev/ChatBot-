@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>React Basics</title>
+  </head>
+  <body>
+    <div class="js-container"></div>
+
+    <script src="https://unpkg.com/supersimpledev/react.js"></script>
+    <script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
+
+
+   <!--this transliate the JSX into normal js-->
+    <script src="https://unpkg.com/supersimpledev/babel.js"></script>
+    <script type="text/babel">
+
+   //this is JSX , js but with HTML written diractly   
+       
+        const div = <div>
+            <h1>hello worls</h1>
+            <p>heeeyyy</p>
+
+            </div>
+
+        //here we give a contaner to react so react only effect that containor {the div}
+      const container = document.querySelector('.js-container');
+     ReactDOM.createRoot(container).render(div);
+    </script>
+  </body>
+</html>

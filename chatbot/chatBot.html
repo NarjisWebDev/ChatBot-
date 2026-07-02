@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>ChatBot</title>
+        <style>
+            body{
+                font-family: Arial, Helvetica, sans-serif;
+                margin: 0;
+            }
+            .cont{
+                display: flex;
+                align-items: center;
+                margin: 10px;
+            }
+            .pic{
+                width: 45px;
+               
+              
+            }
+            p{
+                font-family: Arial;
+            }
+            .sendBut{
+                background-color: green;
+                padding: 10px;
+                color: aliceblue;
+                border: none;
+                border-radius: 10px;
+                margin-left: 10px;
+               
+            }
+            input{
+                padding-right: 170px;
+                padding-left: 10px;
+                padding-top: 10px;
+                padding-bottom: 10px;
+                border-radius: 10px;
+                font-size: 15px;
+                border-width: 1px;
+
+                flex-grow: 1;
+
+              
+            }
+            .top{
+             display: flex; 
+               margin-bottom: 60px;  
+               
+            }
+            .app{
+                max-width: 600px;
+               margin-left: auto; 
+               margin-right: auto;
+               height: 100vh;
+               display: flex;
+               flex-direction: column;
+
+            }
+            .ChatMesUser{
+                display: flex;
+                justify-content: end;
+                align-items: start;
+            }
+            .ChatMesRobot{
+                display: flex;
+                align-items: start;
+            }
+            .text{
+                background-color: rgb(238, 238, 238);
+                align-items: center;
+                border-radius: 10px;
+                padding: 15px;
+                margin-right: 10px;
+                margin-left: 10px;
+                margin-bottom: 20px;
+                max-width: 300px;
+
+            }
+            .chatMesCont{
+                flex-grow: 1;
+                margin-top: 20px;
+                overflow: scroll;
+                scrollbar-width: none;
+              
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="bigBox"></div>
+
+      
+    <script src="https://unpkg.com/supersimpledev/react.js"></script>
+    <script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
+
+      <script src="https://unpkg.com/supersimpledev/Chatbot.js"></script>
+
+     <script src="https://unpkg.com/supersimpledev/babel.js"></script>
+
+     <script type="text/babel">
+
+      function ChatInput({ChatMessages, setChatMessages}){
+       const [inputText, setInputText] = React.useState('')
+
+        function saveInput(event){
+          setInputText(event.target.value) 
+        }
+
+        function sendMessage(){
+
+            const newChatMessage = [
+                ...ChatMessages, 
+                {
+                    message: inputText,
+                    sender: 'user',
+                    id: crypto.randomUUID()
+                },
+                
+            ];
+                     setChatMessages(newChatMessage);
+            
+        const response =Chatbot.getResponse(inputText); 
+          setChatMessages([
+               ...newChatMessage, 
+                {
+                    message: response,
+                    sender: 'robot',
+                    id: crypto.randomUUID()
+                },
+                
+            ]);
+        
+
+            setInputText('')
+        }
+        return(
+            <div className="top">
+                <input onChange ={saveInput} placeholder= "whats on your mind ? " value={inputText}></input>
+                <button onClick={sendMessage} className="sendBut">send</button>    
+            </div>
+        )
+      } 
+      
+      function ChatMessage({message, sender}){
+       
+        return(
+        <div className={sender === "user" ? 'ChatMesUser' : 'ChatMesRobot'}>
+
+            {sender==='robot' && <img src="robot.png" class='pic'/>  }
+          <div className = "text"> {message}</div>
+            {sender === 'user' && <img src="user.png" class='pic'/>}
+           
+           
+        </div>
+        )
+      }
+
+
+  function Chat({ChatMessages}){
+
+       React.useEffect(() => {
+        console.log('updatedt')
+
+       }, []);
+    
+            return(
+                <div className="chatMesCont">
+                 {ChatMessages.map((ChatMessages) => {
+                return(
+                    <ChatMessage 
+                            message = {ChatMessages.message}
+                            sender = {ChatMessages.sender} 
+                            key = {ChatMessages.id}
+                    />
+                )
+            })}
+        
+            </div>
+        )
+         
+  }
+
+      function App(){
+
+         const [ChatMessages,setChatMessages ] = React.useState( [
+            ])
+       
+       //let ChatMessages = arrey[0] //current arrey
+      // let setChatMessages = arrey[1] //fun to update the data
+
+       return (
+       <div className="app">
+          
+            <Chat 
+            ChatMessages={ChatMessages}
+            />
+              <ChatInput 
+            ChatMessages={ChatMessages}
+            setChatMessages={setChatMessages}
+            />
+       </div>
+        )
+      }
+       
+      
+           
+       const box = document.querySelector('.bigBox');
+        ReactDOM.createRoot(box).render(<App />);
+      
+        
+     </script>
+    </body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>ex2</title>
+    </head>
+
+    <body>
+        <div class="bigBox"></div>
+          <script src="https://unpkg.com/supersimpledev/react.js"></script>
+    <script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
+
+      <script src="https://unpkg.com/supersimpledev/Chatbot.js"></script>
+
+     <script src="https://unpkg.com/supersimpledev/babel.js"></script>
+
+     <script type="text/babel">
+/*-----------------------------------------------------------------------------*/       
+        function OnTheClick(){
+           
+            console.log(number)
+            
+        }
+        function Button(){
+
+            return(
+                <button onClick={OnTheClick}>click 0 times </button>
+            )
+            
+        }
+                function App(){
+                    return(
+                    <Button/>
+            )
+        }
+
+
+      const cont = document.querySelector('.bigBox');
+      ReactDOM.createRoot(cont).render(<App />);
+
+     </script><!--jsx-->
+    </body>
+</html>
